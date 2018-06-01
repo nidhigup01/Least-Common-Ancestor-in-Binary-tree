@@ -24,85 +24,67 @@ and the answer would be 3.
 """
 # This function assumes that n1 and n2 are present in
 # Binary Tree
-class Node():
+class Node_root:
+     
     # Constructor to create a new tree node
-    def __init__(self, root = None, T = [[]]):
-        self.root = root
+    def __init__(self, key):
+        self.key = key 
         self.left = None
         self.right = None
-        self.T = T
+     
+# This function returns pointer to LCA of two given
+# values n1 and n2
+# This function assumes that n1 and n2 are present in
+# Binary Tree
+def findLCA(T, key, n1, n2):
     
-    def left_child(self):
-        num_rows = len(self.T)
-        print ('num_rows', num_rows)
-        num_columns = len(self.T[0])
-        print ('num_columns', num_columns)
-        parent = self.root
-        print ('parent', parent)
-        print('T[3][0]', self.T[3][0])
-        print('T[3][1]', self.T[3][1])
-        print('T[3][2]', self.T[3][2])
-        print('T[3][3]', self.T[3][3])
-        print('T[3][4]', self.T[3][4])
-        for child in range(0, num_columns):
-            if self.T[parent][child] == 1 and  child <= parent:
-                node_root.left = child
-                print ('node_root.left', node_root.left )
-                return node_root.left
+    root = Node_root(key)
+    print ('root.key', root.key)
+    # Base Case
+    if root is None or T == None or T == [[]]:
+        return None
+    num_rows = len(T)
+    print ('num_rows', num_rows)
+    num_columns = len(T[0])
+    print ('num_columns', num_columns)
+   
+    parent = key
+    print ('parent', parent)
+    for child in range(0, num_columns):
+        if T[parent][child] == 1 and  child <= parent:
+            root.left = child
+            print ('root.left', root.left )
             
-    def right_child(self):
-        num_rows = len(self.T)
-        print ('num_rows', num_rows)
-        num_columns = len(self.T[0])
-        print ('num_columns', num_columns)
-        parent = self.root
-        print ('parent', parent)
-        for child in range(0, num_columns):   
-            if self.T[parent][child] == 1 and  child > parent:
-                node_root.right == child
-                print ('node_root.right', node_root.right )
-                return node_root.right
-            
-    def LCA_binary_tree(self, r, n1, n2):
-        T= self.T
-        root = r
-     # Base Case
-        if root is None or T == None or T == [[]]:
-            print ('none')
-            return None
+        elif T[parent][child] == 0:
+                root.left = None
+        elif T[parent][child] == 1 and  child > parent:
+            root.right = child
+            print ('root.right', root.right )
     
-        node_root.data = root
-        print ('node_root.data', node_root.data )
-    
-    
-     # If either n1 or n2 matches with root's key, report
+    # If either n1 or n2 matches with root's key, report
     #  the presence by returning root (Note that if a key is
     #  ancestor of other, then the ancestor key becomes LCA
-        if node_root.data == n1 or node_root.data == n2:
-            return node_root.data 
+    if root.key == n1 or root.key == n2:
+        return root 
+ 
     # Look for keys in left and right subtrees
-        left_lca = node_root.LCA_binary_tree(node_root.left_child(), n1, n2) 
-        print('left_lca', left_lca)
-        right_lca = node_root.LCA_binary_tree(node_root.right_child(), n1, n2)
-        print('right_lca', right_lca)
+    left_lca = findLCA(T, root.left, n1, n2) 
+    right_lca = findLCA(T, root.right, n1, n2)
+ 
     # If both of the above calls return Non-NULL, then one key
     # is present in once subtree and other is present in other,
-    # So this node is the LCA. 
-        if left_lca and right_lca:
-            return node_root.data 
-    
-    # Otherwise check if left subtree or right subtree is LCA
-        return left_lca if left_lca is not None else right_lca
+    # So this node is the LCA
+    if left_lca and right_lca:
+        return root 
  
-      
-
-# Test cases
-    
+    # Otherwise check if left subtree or right subtree is LCA
+    return left_lca if left_lca is not None else right_lca
+ 
+ 
+# Driver program to test above function
  
 # Let us create a binary tree given in the above example
-node_root = Node(3, [[0, 1, 0, 0, 0],[0, 0, 0, 0, 0],
+print ("LCA(4,5) = ", findLCA([[0, 1, 0, 0, 0],[0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0],
            [1, 0, 0, 0, 1],
-           [0, 0, 0, 0, 0]])
-
-node_root.LCA_binary_tree(r = 3, n1 = 1,n2 = 4)
+           [0, 0, 0, 0, 0]], key = 3, n1 = 1, n2 = 4))
