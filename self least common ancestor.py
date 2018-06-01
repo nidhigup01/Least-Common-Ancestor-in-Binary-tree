@@ -56,7 +56,7 @@ def findLCA(T, key, n1, n2):
             print ('root.left', root.left )
             
         elif T[parent][child] == 0:
-                root.left = None
+                pass
         elif T[parent][child] == 1 and  child > parent:
             root.right = child
             print ('root.right', root.right )
